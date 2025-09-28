@@ -8,12 +8,12 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: [
-      "http://localhost:5173", // Local development
-      "https://fullstack-chat-2onzmxd8h-oliver-lomanats-projects.vercel.app", // Your Vercel URL
-      "https://*.vercel.app"  // All Vercel deployments
+      "http://localhost:5173",
+      "https://fullstack-chat-app-rho-one.vercel.app",
+      "https://*.vercel.app"
     ],
     credentials: true,
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
   },
 });
 

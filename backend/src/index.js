@@ -20,12 +20,16 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", 
-      "https://fullstack-chat-2onzmxd8h-oliver-lomanats-projects.vercel.app", // Your Vercel URL
-      "https://*.vercel.app"  // All Vercel deployments
+      "https://fullstack-chat-app-rho-one.vercel.app",
+      "https://*.vercel.app"
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
   })
 );
+
+// Add this to handle preflight requests
+app.options('*', cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
