@@ -9,8 +9,8 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173", // Local development
-      "https://*.vercel.app",  // Vercel deployments
-      "*" // Temporary for testing - remove in production
+      "https://fullstack-chat-2onzmxd8h-oliver-lomanats-projects.vercel.app", // Your Vercel URL
+      "https://*.vercel.app"  // All Vercel deployments
     ],
     credentials: true,
     methods: ["GET", "POST"]

@@ -11,7 +11,7 @@ import { app, server } from "./lib/socket.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5001; // Fallback to 5001 if PORT not set
+const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
 app.use(express.json());
@@ -20,8 +20,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", 
-      "https://*.vercel.app", // Allow all Vercel deployments
-      "*" // Temporary for testing
+      "https://fullstack-chat-2onzmxd8h-oliver-lomanats-projects.vercel.app", // Your Vercel URL
+      "https://*.vercel.app"  // All Vercel deployments
     ],
     credentials: true,
   })
