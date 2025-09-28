@@ -10,10 +10,11 @@ const io = new Server(server, {
     origin: [
       "http://localhost:5173",
       "https://fullstack-chat-app-rho-one.vercel.app",
+      "https://fullstack-chat-app-git-main-oliver-lomanats-projects.vercel.app",
       "https://*.vercel.app"
     ],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    methods: ["GET", "POST"]
   },
 });
 
@@ -21,8 +22,7 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-// used to store online users
-const userSocketMap = {}; // {userId: socketId}
+const userSocketMap = {};
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
@@ -30,7 +30,6 @@ io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId) userSocketMap[userId] = socket.id;
 
-  // io.emit() is used to send events to all the connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {

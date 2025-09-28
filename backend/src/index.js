@@ -21,6 +21,7 @@ app.use(
     origin: [
       "http://localhost:5173", 
       "https://fullstack-chat-app-rho-one.vercel.app",
+      "https://fullstack-chat-app-git-main-oliver-lomanats-projects.vercel.app",
       "https://*.vercel.app"
     ],
     credentials: true,
@@ -28,13 +29,12 @@ app.use(
   })
 );
 
-// Add this to handle preflight requests
+// Handle preflight requests
 app.options('*', cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Simple root route
 app.get("/", (req, res) => {
   res.json({ 
     message: "Chat App Backend API is running!",
