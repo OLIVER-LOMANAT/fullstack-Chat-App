@@ -10,6 +10,19 @@ const ProfilePage = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Let's check if the file is too big - like over 5MB
+    // Because big images can slow things down
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Whoops! That image is too big. Please choose one smaller than 5MB.");
+      return;
+    }
+
+    // Make sure it's actually an image file
+    if (!file.type.startsWith('image/')) {
+      alert("Please select an image file (like JPG, PNG, etc.)");
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -30,8 +43,7 @@ const ProfilePage = () => {
             <p className="mt-2">Your profile information</p>
           </div>
 
-          {/* avatar upload section */}
-
+          {/* This is where you can upload your profile picture */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
@@ -65,6 +77,7 @@ const ProfilePage = () => {
             </p>
           </div>
 
+          {/* Your basic info section */}
           <div className="space-y-6">
             <div className="space-y-1.5">
               <div className="text-sm text-zinc-400 flex items-center gap-2">
@@ -83,12 +96,19 @@ const ProfilePage = () => {
             </div>
           </div>
 
+          {/* Extra account details */}
           <div className="mt-6 bg-base-300 rounded-xl p-6">
             <h2 className="text-lg font-medium  mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
                 <span>Member Since</span>
-                <span>{authUser.createdAt?.split("T")[0]}</span>
+                {/* Fixed this part - sometimes the date might not exist yet */}
+                <span>
+                  {authUser?.createdAt 
+                    ? new Date(authUser.createdAt).toLocaleDateString() 
+                    : 'Recently'
+                  }
+                </span>
               </div>
               <div className="flex items-center justify-between py-2">
                 <span>Account Status</span>
