@@ -28,10 +28,24 @@ export const signup = async (req, res) => {
     });
 
     if (newUser) {
-      // generate jwt token here
-      generateToken(newUser._id, res);
+      // Save user first
       await newUser.save();
-
+      
+      // Generate token - check return value instead of try-catch
+      const token = generateToken(newUser._id, res);
+      
+      if (!token) {
+        console.log("Token generation failed in signup");
+        // User was created but token failed
+        return res.status(201).json({
+          _id: newUser._id,
+          fullName: newUser.fullName,
+          email: newUser.email,
+          profilePic: newUser.profilePic,
+          warning: "User created but authentication may need retry"
+        });
+      }
+        
       res.status(201).json({
         _id: newUser._id,
         fullName: newUser.fullName,
@@ -61,7 +75,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    generateToken(user._id, res);
+    // Generate token - check return value instead of try-catch
+    const token = generateToken(user._id, res);
+    
+    if (!token) {
+      console.log("Token generation failed in login");
+      return res.status(500).json({ message: "Authentication service error" });
+    }
 
     res.status(200).json({
       _id: user._id,
@@ -75,6 +95,7 @@ export const login = async (req, res) => {
   }
 };
 
+// Keep your existing logout, updateProfile, and checkAuth functions the same
 export const logout = (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });

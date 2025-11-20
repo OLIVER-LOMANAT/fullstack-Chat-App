@@ -13,19 +13,33 @@ export const useAuthStore = create((set, get) => ({
   onlineUsers: [],
   socket: null,
 
-  checkAuth: async () => {
-    try {
-      const res = await axiosInstance.get("/auth/check");
-
+checkAuth: async () => {
+  try {
+    const res = await axiosInstance.get("/auth/check");
+    
+    // FIX: Make sure the response structure matches what your backend sends
+    if (res.data && res.data._id) {
       set({ authUser: res.data });
       get().connectSocket();
-    } catch (error) {
-      console.log("Error in checkAuth:", error);
+    } else {
+      console.log("Invalid user data in checkAuth response:", res.data);
       set({ authUser: null });
-    } finally {
-      set({ isCheckingAuth: false });
     }
-  },
+  } catch (error) {
+    console.log("Error in checkAuth:", error);
+    
+    // More specific error handling
+    if (error.response?.status === 401) {
+      console.log("User not authenticated");
+    } else if (error.response?.status === 500) {
+      console.log("Server error during auth check");
+    }
+    
+    set({ authUser: null });
+  } finally {
+    set({ isCheckingAuth: false });
+  }
+},
 
   signup: async (data) => {
     set({ isSigningUp: true });

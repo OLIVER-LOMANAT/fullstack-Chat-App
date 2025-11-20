@@ -3,10 +3,19 @@ services:
     name: chat-app-backend
     env: node
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
+      # Remove PORT - let Render auto-assign
+      - key: JWT_SECRET
+        value: mysecretkey
+      - key: MONGODB_URI
+        value: mongodb+srv://dida_loma:VIwEa9ohXVEtsCnN@cluster0.oozsjq9.mongodb.net/chatdb?retryWrites=true&w=majority&appName=Cluster0
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dsed9wosv
+      - key: CLOUDINARY_API_KEY
+        value: 683825332225589
+      - key: CLOUDINARY_API_SECRET
+        value: yfKmRO18E4CrYWLZNAo6mv6bA-s
