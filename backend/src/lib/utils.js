@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 
 export const generateToken = (userId, res) => {
   try {
-    // Check if JWT_SECRET exists
+    // Checking if JWT_SECRET exists
     if (!process.env.JWT_SECRET) {
       console.log("JWT_SECRET is missing in environment variables");
-      return null; // Return null instead of throwing
+      return null; 
     }
 
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {

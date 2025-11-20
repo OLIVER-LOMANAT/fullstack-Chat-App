@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    // Check if JWT_SECRET exists
+    // Checking if JWT_SECRET exists
     if (!process.env.JWT_SECRET) {
       return res.status(500).json({ message: "Server configuration error" });
     }

@@ -18,7 +18,7 @@ const __dirname = path.resolve();
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
+
       if (!origin) return callback(null, true);
       
       const allowedOrigins = [
@@ -26,7 +26,7 @@ app.use(
         "https://fullstack-chat-app-rho-one.vercel.app",
         "https://fullstack-chat-app-git-main-oliver-lomanats-projects.vercel.app",
         "https://fullstack-chat-app-oliver-lomanat.vercel.app",
-        /\.vercel\.app$/ // Allow all vercel subdomains
+        /\.vercel\.app$/ 
       ];
       
       if (allowedOrigins.some(allowedOrigin => {

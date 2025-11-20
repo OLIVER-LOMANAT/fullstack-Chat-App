@@ -28,10 +28,10 @@ export const signup = async (req, res) => {
     });
 
     if (newUser) {
-      // Save user first
+      // Saving  user
       await newUser.save();
       
-      // Generate token - check return value instead of try-catch
+      // Generate token 
       const token = generateToken(newUser._id, res);
       
       if (!token) {
@@ -75,7 +75,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate token - check return value instead of try-catch
+    // Generate token
     const token = generateToken(user._id, res);
     
     if (!token) {
@@ -95,7 +95,6 @@ export const login = async (req, res) => {
   }
 };
 
-// Keep your existing logout, updateProfile, and checkAuth functions the same
 export const logout = (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
